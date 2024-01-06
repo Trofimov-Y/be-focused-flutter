@@ -15,10 +15,16 @@ dependencies:
     sdk: flutter
   intl: ^0.18.0
 
+  injectable: ^2.3.2
+  injectable_generator: ^2.4.1
+  get_it: ^7.6.4
+  fpdart: ^1.1.0
   logger: ^2.0.2+1
   auto_route: ^7.8.4
   build_runner: ^2.4.6
   auto_route_generator: ^7.3.2
+  flutter_native_splash: ^2.3.9
+  awesome_extensions: ^2.0.11
 
 dev_dependencies:
   bloc_test: ^9.1.4
@@ -26,7 +32,8 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^1.0.0
   very_good_analysis: ^5.1.0
-  
+
+  build_runner: ^2.4.6
   po_editor_translations: ^0.1.0
 
 flutter:
