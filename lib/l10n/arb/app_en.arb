@@ -1,7 +1,1 @@
-{
-    "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
-}
+{"@@locale":"en","@@updated":"2024-01-06T08:18:03+0000","@@language":"English","@@percentage":"100.0","welcomeTitle":"Welcome"}
