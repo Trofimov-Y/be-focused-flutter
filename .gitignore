@@ -40,6 +40,10 @@ linked_*.ds
 unlinked.ds
 unlinked_spec.ds
 .fvm/
+*freezed.dart
+lib/app/routing/router.gr.dart
+lib/app/di/configure_dependencies.config.dart
+
 
 # Android related
 **/android/**/gradle-wrapper.jar
