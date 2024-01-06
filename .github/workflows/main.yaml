@@ -19,11 +19,9 @@ jobs:
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
+      setup: 'sh pre-build.sh'
+      min_coverage: 0
+      format_directories: 'lib/app test/'
+      coverage_excludes: '*.g.dart, *.freezed.dart, *.injectable.dart'
+      format_line_length: 100
       flutter_channel: stable
-
-  spell-check:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
-    with:
-      includes: |
-        **/*.md
-      modified_files_only: false
