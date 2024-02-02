@@ -7,6 +7,7 @@ analyzer:
     - "**.g.dart"
     - "**.environment_config.dart"
     - "lib/l10n/generated/*"
+    - "lib/app/widgets/material/*"
 
 linter:
   rules:
