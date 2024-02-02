@@ -1,7 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:be_focused/app/extensions/context_extensions.dart';
-import 'package:be_focused/app/theme/colors.dart';
 import 'package:be_focused/app/widgets/material/app_bar_with_blur.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
