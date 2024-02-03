@@ -1,4 +1,4 @@
-package com.example.verygoodcore.be_focused
+package  io.flarrow.be_focused_app
 
 import io.flutter.embedding.android.FlutterActivity
 

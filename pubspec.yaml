@@ -30,12 +30,18 @@ dependencies:
   flutter_native_splash: ^2.3.10
   google_fonts: ^6.1.0
   awesome_extensions: ^2.0.12
+  freezed_annotation: ^2.4.1
   table_calendar: ^3.0.9
   flutter_sticky_header: ^0.6.5
   flutter_animate: ^4.5.0
 
+  # Firebase
+  firebase_core: ^2.25.0
+  cloud_firestore: ^4.15.3
+
 dev_dependencies:
   bloc_test: ^9.1.5
+  freezed: ^2.4.6
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.3

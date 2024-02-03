@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.verygoodcore.be_focused">
+    package="io.flarrow.be_focused">
    <application
         android:label="${appName}"
         android:name="${applicationName}"
