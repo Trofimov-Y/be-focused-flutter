@@ -22,17 +22,20 @@ if (flutterVersionName == null) {
 }
 
 def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('signin/keystore.properties')
+def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
 apply plugin: 'com.android.application'
+// START: FlutterFire Configuration
+apply plugin: 'com.google.gms.google-services'
+// END: FlutterFire Configuration
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    namespace "com.example.verygoodcore.be_focused"
+    namespace "io.flarrow.be_focused"
     ndkVersion "25.1.8937393"
     compileSdk 34
 
@@ -51,7 +54,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.verygoodcore.be_focused"
+        applicationId "io.flarrow.be_focused"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
@@ -77,7 +80,7 @@ android {
     }
 
     flavorDimensions "default"
-    productFlavors {
+    productFlavors { 
         production {
             dimension "default"
             applicationIdSuffix ""
