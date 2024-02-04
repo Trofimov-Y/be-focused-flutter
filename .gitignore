@@ -114,3 +114,4 @@ app.*.map.json
 !.idea/codeStyles/
 !.idea/dictionaries/
 !.idea/runConfigurations/
+/lib/l10n/arb/*
