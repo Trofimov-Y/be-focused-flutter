@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:be_focused/app/di/configure_dependencies.dart';
-import 'package:be_focused/observers/bloc_observer.dart';
+import 'package:be_focused/app/observers/bloc_observer.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
