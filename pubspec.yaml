@@ -36,7 +36,7 @@ dependencies:
   flutter_animate: ^4.5.0
 
   # Firebase
-  firebase_core: ^2.25.0
+  firebase_core: ^2.25.3
   cloud_firestore: ^4.15.3
 
 dev_dependencies:
@@ -48,8 +48,7 @@ dev_dependencies:
   very_good_analysis: ^5.1.0
 
   build_runner: ^2.4.8
-  po_editor_translations: ^0.1.0
-
+  flutter_loco_translations: ^2.0.0
 
 flutter:
   uses-material-design: true
