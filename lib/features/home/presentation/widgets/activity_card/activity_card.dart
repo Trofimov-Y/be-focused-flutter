@@ -2,9 +2,9 @@ import 'dart:math' as math;
 
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:be_focused/app/extensions/context_extensions.dart';
-import 'package:be_focused/app/extensions/object_extensions.dart';
 import 'package:be_focused/app/utils/date_formatters.dart';
 import 'package:be_focused/app/widgets/painters/circular_progress_painter.dart';
+import 'package:be_focused/l10n/l10n.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,46 +18,25 @@ class ActivityCard extends StatefulWidget {
   const ActivityCard({
     required this.title,
     required this.backgroundColor,
-    required this.isActive,
     required this.onTap,
     required this.onArchive,
-    required this.borderRadius,
-    required this.archiveProgressColor,
-    required this.canStart,
-    this.onControlTap,
+    this.circularBorderRadius = 32,
     this.description,
-    this.plannedTime,
-    this.duration,
-    this.progress,
+    this.dateTimeRange,
     super.key,
   });
 
   final String title;
   final String? description;
+  final DateTimeRange? dateTimeRange;
+
+  final double circularBorderRadius;
+  final Color backgroundColor;
 
   final VoidCallback onTap;
 
   /// Called when the archive animation is completed
   final VoidCallback onArchive;
-
-  final VoidCallback? onControlTap;
-
-  final DateTime? plannedTime;
-
-  final Duration? duration;
-  final Duration? progress;
-
-  /// Used to understand if the activity is in progress or not
-  final bool isActive;
-
-  /// Used to show the start button
-  final bool canStart;
-
-  /// Used to paint the progress of the archive animation
-  final Color archiveProgressColor;
-
-  final Color backgroundColor;
-  final double borderRadius;
 
   @override
   State<ActivityCard> createState() => _ActivityCardState();
@@ -122,10 +101,8 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final duration = widget.duration;
-    final startTime = widget.plannedTime;
+    final timeRange = widget.dateTimeRange;
     final description = widget.description;
-    final leftTime = duration?.let((it) => it - (widget.progress ?? Duration.zero));
 
     return GestureDetector(
       onTap: () {
@@ -151,8 +128,8 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
               return CustomPaint(
                 foregroundPainter: ArchiveProgressPainter(
                   progress: _archiveProgressTween.value,
-                  color: widget.archiveProgressColor,
-                  borderRadius: widget.borderRadius,
+                  color: context.colorScheme.primary,
+                  borderRadius: widget.circularBorderRadius,
                 ),
                 child: child,
               );
@@ -163,26 +140,16 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
               constraints: const BoxConstraints(minHeight: 96),
               decoration: BoxDecoration(
                 color: widget.backgroundColor,
-                borderRadius: BorderRadius.circular(widget.borderRadius),
+                borderRadius: BorderRadius.circular(widget.circularBorderRadius),
               ),
               child: Row(
                 children: [
-                  if (startTime != null && leftTime == null) ...[
-                    Text(
-                      timeFormat.format(startTime),
-                      style: context.titleSmall?.bold.copyWith(
-                        overflow: TextOverflow.ellipsis,
-                        color: context.colorScheme.secondary,
-                      ),
-                    ),
-                    const Gap(16),
-                  ],
-                  if (startTime != null && leftTime != null) ...[
+                  if (timeRange != null) ...[
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          timeFormat.format(startTime),
+                          timeFormat.format(timeRange.start),
                           style: context.titleMedium?.bold.copyWith(
                             overflow: TextOverflow.ellipsis,
                             color: context.colorScheme.secondary,
@@ -197,7 +164,7 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
                           duration: const Duration(milliseconds: 700),
                         ),
                         Text(
-                          timeFormat.format(startTime.add(leftTime)),
+                          timeFormat.format(timeRange.end),
                           style: context.titleMedium?.bold.copyWith(
                             overflow: TextOverflow.ellipsis,
                             color: context.colorScheme.secondary,
@@ -234,18 +201,6 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
                       ),
                     ],
                   ).expanded(),
-                  Visibility(
-                    visible: duration != null && leftTime != null && widget.canStart,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: _Timer(
-                        leftTime: leftTime ?? Duration.zero,
-                        totalDuration: duration ?? Duration.zero,
-                        isActive: widget.isActive,
-                        onTap: widget.onControlTap,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

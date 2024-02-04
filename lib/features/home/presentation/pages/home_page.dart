@@ -22,8 +22,13 @@ part '../widgets/_app_bar.dart';
 
 // TODO(Yuriy-Trofimov): Add localizations
 @RoutePage()
-class HomePage extends StatelessWidget {
+class HomePage extends StatelessWidget implements AutoRouteWrapper {
   const HomePage({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return this;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,14 +82,8 @@ class HomePage extends StatelessWidget {
                     title: 'Morning exercise',
                     description:
                         '1. Push-ups - 10 times\n2. Squats - 20 times\n3. Pull-ups - 5 times',
-                    archiveProgressColor: context.colorScheme.primary,
-                    duration: const Duration(hours: 1),
                     onTap: () {},
                     onArchive: () {},
-                    progress: const Duration(minutes: 37),
-                    borderRadius: 32,
-                    isActive: false,
-                    canStart: true,
                   ),
                 ),
                 const Gap(8),
@@ -94,12 +93,8 @@ class HomePage extends StatelessWidget {
                     backgroundColor: CardColors.emerald,
                     title: 'Make a homework',
                     description: 'Complete the homework for the next lesson',
-                    isActive: true,
                     onTap: () {},
                     onArchive: () {},
-                    borderRadius: 32,
-                    archiveProgressColor: context.colorScheme.primary,
-                    canStart: false,
                   ),
                 ),
                 const Gap(8),
@@ -108,12 +103,8 @@ class HomePage extends StatelessWidget {
                   child: ActivityCard(
                     backgroundColor: CardColors.yellow,
                     title: 'Buy a new light bulb',
-                    isActive: true,
                     onTap: () {},
                     onArchive: () {},
-                    borderRadius: 32,
-                    archiveProgressColor: context.colorScheme.primary,
-                    canStart: false,
                   ),
                 ),
                 const Gap(8),
@@ -123,12 +114,8 @@ class HomePage extends StatelessWidget {
                     backgroundColor: CardColors.strawberry,
                     title: 'Shopping at the Varus',
                     description: 'Do not forget to buy milk, bread and cheese',
-                    isActive: true,
                     onTap: () {},
                     onArchive: () {},
-                    borderRadius: 32,
-                    archiveProgressColor: context.colorScheme.primary,
-                    canStart: false,
                   ),
                 ),
                 const Gap(8),
@@ -148,7 +135,9 @@ class HomePage extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Planed',
-                      style: context.titleMedium?.bold.copyWith(color: context.colorScheme.primary),
+                      style: context.titleMedium?.bold.copyWith(
+                        color: context.colorScheme.primary,
+                      ),
                     ),
                   ),
                 ),
@@ -161,34 +150,31 @@ class HomePage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: ActivityCard(
                     backgroundColor: CardColors.pink,
-                    plannedTime: DateTime.now(),
+                    dateTimeRange: DateTimeRange(
+                      start: DateTime.now(),
+                      end: DateTime.now().add(const Duration(days: 1)),
+                    ),
                     title: 'Meetings',
                     description: 'Meet with the team to discuss the new project',
-                    archiveProgressColor: context.colorScheme.primary,
-                    duration: const Duration(hours: 1),
-                    progress: const Duration(minutes: 1),
                     onTap: () {},
                     onArchive: () {},
-                    borderRadius: 32,
-                    isActive: true,
-                    canStart: true,
                   ),
                 ),
                 const Gap(8),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: ActivityCard(
-                    backgroundColor: CardColors.red,
-                    plannedTime: DateTime.now().add(const Duration(hours: 1)),
-                    title: 'Gaming with friends',
-                    description: 'DotA 2',
-                    archiveProgressColor: context.colorScheme.primary,
-                    duration: const Duration(hours: 1),
-                    onTap: () {},
-                    onArchive: () {},
-                    borderRadius: 32,
-                    isActive: false,
-                    canStart: false,
+                Visibility(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: ActivityCard(
+                      backgroundColor: CardColors.red,
+                      dateTimeRange: DateTimeRange(
+                        start: DateTime.now(),
+                        end: DateTime.now().add(const Duration(minutes: 30)),
+                      ),
+                      title: 'Gaming with friends',
+                      description: 'DotA 2',
+                      onTap: () {},
+                      onArchive: () {},
+                    ),
                   ),
                 ),
                 const Gap(8),
