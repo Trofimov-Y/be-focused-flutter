@@ -14,7 +14,6 @@ Future<void> main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // await FirebaseFirestore.instance.disableNetwork();
   FirebaseFirestore.instance.settings = const Settings(
     cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
   );
