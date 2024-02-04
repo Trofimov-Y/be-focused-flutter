@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:be_focused/features/authentication/presentation/pages/authentication_page.dart';
-import 'package:be_focused/features/home/presentation/pages/home_page.dart';
-import 'package:be_focused/features/settings/presentation/settings_page.dart';
+import 'package:be_focused/features/authentication/pages/authentication_page.dart';
+import 'package:be_focused/features/home/pages/home_page.dart';
+import 'package:be_focused/features/settings/pages/settings_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 
