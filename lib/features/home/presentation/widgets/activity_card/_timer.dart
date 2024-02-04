@@ -1,5 +1,7 @@
 part of 'activity_card.dart';
 
+// TODO(Yuriy-Trofimov): implement this feature later
+// ignore: unused_element
 class _Timer extends StatelessWidget {
   const _Timer({
     required this.isActive,
@@ -43,9 +45,8 @@ class _Timer extends StatelessWidget {
           ),
         ),
         const Gap(4),
-        // TODO(Yuriy-Trofimov): Add localization.
         Text(
-          '${leftTime.inMinutes} min',
+          context.l10n.minutes(leftTime.inMinutes),
           style: context.titleSmall?.bold.copyWith(
             overflow: TextOverflow.ellipsis,
             color: context.colorScheme.secondary,
