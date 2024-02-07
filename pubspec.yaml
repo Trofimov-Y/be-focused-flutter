@@ -36,7 +36,7 @@ dependencies:
   flutter_animate: ^4.5.0
 
   # Firebase
-  firebase_core: ^2.25.0
+  firebase_core: ^2.25.4
   cloud_firestore: ^4.15.3
 
 dev_dependencies:
