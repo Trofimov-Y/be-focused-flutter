@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:be_focused/app/extensions/context_extensions.dart';
 import 'package:be_focused/app/widgets/material/app_bar_with_blur.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -21,21 +22,20 @@ class SettingsPage extends StatelessWidget {
             elevation: 0,
             scrolledUnderElevation: 0,
             titleSpacing: 12,
-            backgroundColor: context.colorScheme.onBackground,
+            backgroundColor: context.colors.onBackground,
             title: Text(
               'Settings',
-              style: TextStyle(fontWeight: FontWeight.bold, color: context.colorScheme.primary),
+              style: TextStyle(fontWeight: FontWeight.bold, color: context.colors.primary),
             ),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(0),
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: context.colorScheme.onSecondary)),
+                  border: Border(bottom: BorderSide(color: context.colors.onSecondary)),
                 ),
               ),
             ),
           ),
-          const SliverGap(8),
           SliverList.list(
             children: [
               ListTile(
@@ -45,103 +45,33 @@ class SettingsPage extends StatelessWidget {
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
               ),
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                title: const Text('Make a suggestion'),
-                leading: const Icon(Clarity.lightbulb_line),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Text(
-                  'General',
-                  style: context.titleMedium?.bold.copyWith(color: context.colorScheme.primary),
-                ),
-              ),
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                title: const Text('Notifications'),
-                leading: const Icon(Clarity.bell_line),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                title: const Text('Start week on'),
-                leading: const Icon(Clarity.calendar_line),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              const SizedBox(height: 12),
+              const Gap(12),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Text(
                   'Account',
-                  style: context.titleMedium?.bold.copyWith(color: context.colorScheme.primary),
+                  style: context.titleMedium?.bold.copyWith(color: context.colors.primary),
                 ),
               ),
+              const Gap(4),
               ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                title: const Text('Subscription'),
-                leading: const Icon(Clarity.crown_line),
+                title: const Text('Log out'),
+                leading: const Icon(Clarity.logout_line),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                },
               ),
-              const ListTile(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                title: Text('Log out'),
-                leading: Icon(Clarity.logout_line),
-                trailing: Icon(Icons.chevron_right),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Text(
-                  'Social',
-                  style: context.titleMedium?.bold.copyWith(color: context.colorScheme.primary),
-                ),
-              ),
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                title: const Text('Instagram'),
-                leading: const Icon(BoxIcons.bxl_instagram),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                title: const Text('Twitter'),
-                leading: const Icon(BoxIcons.bxl_twitter),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                title: const Text('Facebook'),
-                leading: const Icon(BoxIcons.bxl_facebook),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                title: const Text('TikTok'),
-                leading: const Icon(BoxIcons.bxl_tiktok),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
-              ),
-              const SizedBox(height: 12),
+              const Gap(12),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Text(
                   'Other',
-                  style: context.titleMedium?.copyWith(color: context.colorScheme.primary),
+                  style: context.titleMedium?.bold.copyWith(color: context.colors.primary),
                 ),
               ),
+              const Gap(4),
               ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 title: const Text('Report a bug'),
@@ -163,18 +93,19 @@ class SettingsPage extends StatelessWidget {
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
               ),
-              const SizedBox(height: 12),
+              const Gap(12),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Text(
                   'Danger zone',
-                  style: context.titleMedium?.copyWith(color: context.colorScheme.primary),
+                  style: context.titleMedium?.bold.copyWith(color: context.colors.primary),
                 ),
               ),
+              const Gap(4),
               ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 title: const Text('Delete account', style: TextStyle(color: Colors.red)),
-                leading: Icon(Clarity.trash_line, color: context.colorScheme.onError),
+                leading: Icon(Clarity.trash_line, color: context.colors.onError),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
               ),
