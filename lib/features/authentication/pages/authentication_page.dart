@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:auto_route/auto_route.dart';
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:be_focused/app/routing/router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -66,7 +67,7 @@ class AuthenticationPage extends StatelessWidget {
           ),
           const SizedBox(height: 56),
           Container(
-            height: 260,
+            height: 200,
             width: double.infinity,
             decoration: const BoxDecoration(
               border: Border(top: BorderSide(color: Colors.white, width: 2)),
@@ -76,36 +77,8 @@ class AuthenticationPage extends StatelessWidget {
               ),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Gap(52),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 48),
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                      side: const BorderSide(color: Colors.white),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32),
-                      ),
-                    ),
-                    onPressed: () {
-                      context.router.push(const HomeRoute());
-                    },
-                    child: Row(
-                      children: [
-                        const Icon(BoxIcons.bxl_google),
-                        const Gap(24),
-                        Text(
-                          'Continue with Google'.toUpperCase(),
-                          style: context.titleMedium?.copyWith(color: Colors.white),
-                          textAlign: TextAlign.center,
-                          textScaler: TextScaler.noScaling,
-                        ).expanded(),
-                      ],
-                    ),
-                  ),
-                ),
-                const Gap(24),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 48),
                   child: OutlinedButton(
@@ -114,7 +87,12 @@ class AuthenticationPage extends StatelessWidget {
                       side: const BorderSide(color: Colors.white),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
                     ),
-                    onPressed: () => context.router.push(const HomeRoute()),
+                    onPressed: () {
+                      // TODO(Yuriy-Trofimov): Implement anonymous sign in inside Cubit
+                      FirebaseAuth.instance
+                          .signInAnonymously()
+                          .then((value) => context.router.push(const HomeRoute()));
+                    },
                     child: Row(
                       children: [
                         const Icon(BoxIcons.bx_user),
