@@ -41,6 +41,7 @@ unlinked.ds
 unlinked_spec.ds
 .fvm/
 *freezed.dart
+*.g.dart
 lib/app/routing/router.gr.dart
 lib/app/di/configure_dependencies.config.dart
 
