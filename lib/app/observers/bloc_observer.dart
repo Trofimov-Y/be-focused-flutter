@@ -5,9 +5,9 @@ class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
 
   @override
-  void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
-    logger.i('onChange(${bloc.runtimeType}, $change)');
-    super.onChange(bloc, change);
+  void onCreate(BlocBase<dynamic> bloc) {
+    logger.i('onCreate $bloc created');
+    super.onCreate(bloc);
   }
 
   @override
