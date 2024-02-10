@@ -18,76 +18,46 @@ class ActivityCard extends StatefulWidget {
   const ActivityCard({
     required this.title,
     required this.backgroundColor,
-    required this.onTap,
-    required this.onArchive,
+    required this.isCompleted,
+    required this.onDoubleTap,
     this.circularBorderRadius = 32,
     this.description,
-    this.dateTimeRange,
+    this.startedAt,
+    this.duration,
     super.key,
   });
 
   final String title;
   final String? description;
-  final DateTimeRange? dateTimeRange;
+  final bool isCompleted;
+
+  final DateTime? startedAt;
+  final Duration? duration;
 
   final double circularBorderRadius;
   final Color backgroundColor;
 
-  final VoidCallback onTap;
-
-  /// Called when the archive animation is completed
-  final VoidCallback onArchive;
+  final VoidCallback onDoubleTap;
 
   @override
   State<ActivityCard> createState() => _ActivityCardState();
 }
 
 class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderStateMixin {
-  final _animationArchiveThreshold = 0.8;
-
   /// Used to get the height of the card for draw line between start and end time
   final _cardHeightKey = GlobalKey();
 
   var _cardHeight = 0.0;
-
-  late final AnimationController _animationController = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 2000),
-  );
-  late final _archiveProgressTween = Tween<double>(begin: 0, end: 1).animate(
-    CurvedAnimation(
-      parent: _animationController,
-      curve: const Interval(0, 0.6, curve: Curves.ease),
-    ),
-  );
-
-  late final _opacityTween = Tween<double>(begin: 1, end: 0).animate(
-    CurvedAnimation(
-      parent: _animationController,
-      curve: const Interval(0.55, 0.8, curve: Curves.ease),
-    ),
-  );
-
-  late final _sizeTween = Tween<double>(begin: 1, end: 0).animate(
-    CurvedAnimation(
-      parent: _animationController,
-      curve: Interval(_animationArchiveThreshold, 1, curve: Curves.ease),
-    ),
-  );
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final box = _cardHeightKey.currentContext?.findRenderObject() as RenderBox?;
-      setState(() {
-        _cardHeight = box?.size.height ?? 0;
-      });
-    });
-
-    _animationController.addListener(() {
-      if (_animationController.value > _animationArchiveThreshold) {
-        widget.onArchive();
+      if (mounted) {
+        setState(() {
+          _cardHeight = box?.size.height ?? 0;
+        });
       }
     });
   }
@@ -95,115 +65,99 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
   @override
   void dispose() {
     _cardHeightKey.currentState?.dispose();
-    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final timeRange = widget.dateTimeRange;
     final description = widget.description;
+    final startedAt = widget.startedAt;
+    final duration = widget.duration;
+
+    DateTimeRange? timeRange;
+
+    if (startedAt != null && duration != null) {
+      timeRange = DateTimeRange(
+        start: startedAt,
+        end: startedAt.add(duration),
+      );
+    }
 
     return GestureDetector(
-      onTap: () {
-        widget.onTap();
-        HapticFeedback.mediumImpact();
-      },
-      onLongPressStart: (_) {
-        _animationController.forward();
+      onDoubleTap: () {
         HapticFeedback.lightImpact();
+        widget.onDoubleTap();
       },
-      onLongPressUp: () {
-        if (_archiveProgressTween.value < _animationArchiveThreshold) {
-          _animationController.reverse();
-        }
-      },
-      child: FadeTransition(
-        opacity: _opacityTween,
-        child: SizeTransition(
-          sizeFactor: _sizeTween,
-          child: AnimatedBuilder(
-            animation: _archiveProgressTween,
-            builder: (context, child) {
-              return CustomPaint(
-                foregroundPainter: ArchiveProgressPainter(
-                  progress: _archiveProgressTween.value,
-                  color: context.colorScheme.primary,
-                  borderRadius: widget.circularBorderRadius,
-                ),
-                child: child,
-              );
-            },
-            child: Container(
-              key: _cardHeightKey,
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-              constraints: const BoxConstraints(minHeight: 96),
-              decoration: BoxDecoration(
-                color: widget.backgroundColor,
-                borderRadius: BorderRadius.circular(widget.circularBorderRadius),
-              ),
-              child: Row(
-                children: [
-                  if (timeRange != null) ...[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          timeFormat.format(timeRange.start),
-                          style: context.titleMedium?.bold.copyWith(
-                            overflow: TextOverflow.ellipsis,
-                            color: context.colorScheme.secondary,
-                          ),
-                          maxLines: 1,
-                        ),
-                        const Gap(2),
-                        AnimatedContainer(
-                          width: 2,
-                          color: context.colorScheme.secondary,
-                          height: _cardHeight * 0.15,
-                          duration: const Duration(milliseconds: 700),
-                        ),
-                        Text(
-                          timeFormat.format(timeRange.end),
-                          style: context.titleMedium?.bold.copyWith(
-                            overflow: TextOverflow.ellipsis,
-                            color: context.colorScheme.secondary,
-                          ),
-                          maxLines: 1,
-                        ),
-                      ],
+      child: Opacity(
+        opacity: widget.isCompleted ? 0.75 : 1,
+        child: Container(
+          key: _cardHeightKey,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          constraints: const BoxConstraints(minHeight: 96),
+          decoration: BoxDecoration(
+            color: widget.backgroundColor,
+            borderRadius: BorderRadius.circular(widget.circularBorderRadius),
+          ),
+          child: Row(
+            children: [
+              if (timeRange != null) ...[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      timeRange.start.timeFormat,
+                      style: context.titleMedium?.bold.copyWith(
+                        overflow: TextOverflow.ellipsis,
+                        color: context.colors.secondary,
+                      ),
+                      maxLines: 1,
                     ),
-                    const Gap(16),
+                    const Gap(2),
+                    AnimatedContainer(
+                      width: 2,
+                      color: context.colors.secondary,
+                      height: _cardHeight * 0.15,
+                      duration: const Duration(milliseconds: 500),
+                    ),
+                    Text(
+                      timeRange.end.timeFormat,
+                      style: context.titleMedium?.bold.copyWith(
+                        overflow: TextOverflow.ellipsis,
+                        color: context.colors.secondary,
+                      ),
+                      maxLines: 1,
+                    ),
                   ],
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.title,
-                        style: context.titleMedium?.bold.copyWith(
-                          overflow: TextOverflow.ellipsis,
-                          color: context.colorScheme.secondary,
-                        ),
-                        maxLines: 2,
-                        textAlign: TextAlign.start,
+                ),
+                const Gap(16),
+              ],
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.title,
+                    style: context.titleMedium?.bold.copyWith(
+                      overflow: TextOverflow.ellipsis,
+                      color: context.colors.secondary,
+                    ),
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                  ),
+                  Visibility(
+                    visible: description != null,
+                    child: Text(
+                      description.orEmpty(),
+                      style: context.titleSmall?.copyWith(
+                        overflow: TextOverflow.ellipsis,
+                        color: context.colors.secondary,
                       ),
-                      Visibility(
-                        visible: description != null,
-                        child: Text(
-                          description.orEmpty(),
-                          style: context.titleSmall?.copyWith(
-                            overflow: TextOverflow.ellipsis,
-                            color: context.colorScheme.secondary,
-                          ),
-                          maxLines: 2,
-                        ),
-                      ),
-                    ],
-                  ).expanded(),
+                      maxLines: 2,
+                    ),
+                  ),
                 ],
-              ),
-            ),
+              ).expanded(),
+            ],
           ),
         ),
       ),

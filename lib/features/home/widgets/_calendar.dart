@@ -5,11 +5,15 @@ typedef OnDayTapCallback = void Function(DateTime date);
 
 class _Calendar extends StatelessWidget {
   const _Calendar({
+    required this.firstDay,
+    required this.lastDay,
     required this.focusedDay,
     required this.onPageChanged,
     required this.onDayTapCallback,
   });
 
+  final DateTime firstDay;
+  final DateTime lastDay;
   final DateTime focusedDay;
 
   final OnPageChangedCallback onPageChanged;
@@ -17,15 +21,13 @@ class _Calendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now().date;
-    final firstDay = DateTime(now.year, now.month - 1);
-    final lastDay = DateTime(now.year, now.month + 2, 0);
     return TableCalendar(
       headerVisible: false,
       firstDay: firstDay,
       lastDay: lastDay,
       focusedDay: focusedDay,
       calendarFormat: CalendarFormat.week,
+      startingDayOfWeek: StartingDayOfWeek.monday,
       onPageChanged: onPageChanged,
       headerStyle: const HeaderStyle(formatButtonVisible: false),
       daysOfWeekVisible: false,
@@ -34,7 +36,7 @@ class _Calendar extends StatelessWidget {
       calendarBuilders: CalendarBuilders<Widget>(
         prioritizedBuilder: (context, date, _) {
           final isFocused = isSameDay(date, focusedDay);
-          final color = isFocused ? context.colorScheme.secondary : context.colorScheme.primary;
+          final color = isFocused ? context.colors.secondary : context.colors.primary;
           return InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () => onDayTapCallback(date),
@@ -42,8 +44,8 @@ class _Calendar extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 2),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: isFocused ? context.colorScheme.primary : Colors.transparent,
-                border: isFocused ? null : Border.all(color: context.colorScheme.primary),
+                color: isFocused ? context.colors.primary : Colors.transparent,
+                border: isFocused ? null : Border.all(color: context.colors.primary),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
@@ -58,13 +60,13 @@ class _Calendar extends StatelessWidget {
                     width: 4,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: context.colorScheme.onSecondary,
+                      color: context.colors.onSecondary,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
                   const Gap(2),
                   Text(
-                    onlyDayFormat.format(date),
+                    date.onlyDayFormat,
                     style: context.bodySmall?.copyWith(color: color),
                   ).alignAtTopCenter().expanded(),
                 ],

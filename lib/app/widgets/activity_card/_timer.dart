@@ -34,12 +34,12 @@ class _Timer extends StatelessWidget {
               height: 40,
               width: 40,
               decoration: BoxDecoration(
-                color: context.colorScheme.secondary,
+                color: context.colors.secondary,
                 borderRadius: BorderRadius.circular(48),
               ),
               child: Icon(
                 isActive ? Icons.pause : Icons.play_arrow,
-                color: context.colorScheme.primary,
+                color: context.colors.primary,
               ),
             ),
           ),
@@ -49,7 +49,7 @@ class _Timer extends StatelessWidget {
           context.l10n.minutes(leftTime.inMinutes),
           style: context.titleSmall?.bold.copyWith(
             overflow: TextOverflow.ellipsis,
-            color: context.colorScheme.secondary,
+            color: context.colors.secondary,
           ),
           maxLines: 1,
         ),

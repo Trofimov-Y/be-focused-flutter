@@ -2,16 +2,18 @@ part of '../pages/home_page.dart';
 
 class _AppBar extends StatefulWidget {
   const _AppBar({
-    required this.onSettingsPressed,
-    required this.onArchivePressed,
-    required this.focussedDay,
+    required this.focusedDay,
+    required this.lastDay,
+    required this.firstDay,
     required this.onDateChanged,
+    required this.actions,
   });
 
-  final DateTime focussedDay;
+  final DateTime firstDay;
+  final DateTime lastDay;
+  final DateTime focusedDay;
 
-  final VoidCallback onSettingsPressed;
-  final VoidCallback onArchivePressed;
+  final List<Widget> actions;
 
   final OnDayTapCallback onDateChanged;
 
@@ -20,7 +22,7 @@ class _AppBar extends StatefulWidget {
 }
 
 class _AppBarState extends State<_AppBar> {
-  late final _pageDateNotifier = ValueNotifier<DateTime>(widget.focussedDay.date);
+  late final _pageDateNotifier = ValueNotifier<DateTime>(widget.focusedDay.date);
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +30,17 @@ class _AppBarState extends State<_AppBar> {
       automaticallyImplyLeading: false,
       titleSpacing: 12,
       scrolledUnderElevation: 0,
-      backgroundColor: context.colorScheme.onPrimary,
+      backgroundColor: context.colors.onPrimary,
       pinned: true,
-      actions: [
-        IconButton(onPressed: widget.onArchivePressed, icon: const Icon(Clarity.archive_line)),
-        IconButton(onPressed: widget.onSettingsPressed, icon: const Icon(Clarity.settings_line)),
-      ],
+      actions: widget.actions,
       title: ValueListenableBuilder(
         valueListenable: _pageDateNotifier,
         builder: (context, date, child) {
           return Text(
-            onlyMonthFormat.format(date),
+            date.onlyMonthFormat,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: context.colorScheme.primary,
+              color: context.colors.primary,
             ),
           ).animate(key: ValueKey(date.month)).fadeIn();
         },
@@ -50,13 +49,15 @@ class _AppBarState extends State<_AppBar> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color: context.colorScheme.onSecondary)),
+            border: Border(bottom: BorderSide(color: context.colors.onSecondary)),
           ),
           padding: const EdgeInsets.only(bottom: 12),
           child: _Calendar(
-            focusedDay: widget.focussedDay,
+            focusedDay: widget.focusedDay,
             onPageChanged: (date) => _pageDateNotifier.value = date,
             onDayTapCallback: widget.onDateChanged,
+            firstDay: widget.firstDay,
+            lastDay: widget.lastDay,
           ),
         ),
       ),
