@@ -1,4 +1,3 @@
-import 'package:be_focused/app/observers/auto_router_observer.dart';
 import 'package:be_focused/app/routing/router.dart';
 import 'package:be_focused/app/theme/theme_data.dart';
 import 'package:be_focused/l10n/l10n.dart';
@@ -13,7 +12,7 @@ class App extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: themeData,
-      routerConfig: GetIt.I.get<AppRouter>().config(navigatorObservers: () => [RoutingObserver()]),
+      routerConfig: GetIt.I.get<AppRouter>().config(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
     );
