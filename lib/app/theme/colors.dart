@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 const colorScheme = ColorScheme(
@@ -14,10 +16,16 @@ const colorScheme = ColorScheme(
   onSurface: Colors.white70,
 );
 
-class CardColors {
-  static const red = Color.fromRGBO(233, 64, 37, 1);
+class ActivityColors {
+  static const red = Color(0xFFe63c3a);
+  static const mint = Color(0xFFc6e7c8);
   static const yellow = Color.fromRGBO(244, 184, 64, 1);
   static const strawberry = Color.fromRGBO(237, 106, 101, 1);
   static const emerald = Color(0xFF00bf8f);
   static const pink = Color.fromRGBO(246, 201, 232, 1);
+  static const purple = Color(0xFF8673FE);
+
+  static List<Color> get colors => [red, mint, purple, yellow, strawberry, emerald, pink];
+
+  static Color get random => colors[Random().nextInt(colors.length)];
 }

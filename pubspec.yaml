@@ -35,8 +35,11 @@ dependencies:
   flutter_sticky_header: ^0.6.5
   flutter_animate: ^4.5.0
 
+  json_annotation: ^4.8.1
+
   # Firebase
-  firebase_core: ^2.25.0
+  firebase_auth: ^4.17.4
+  firebase_core: ^2.25.3
   cloud_firestore: ^4.15.3
 
 dev_dependencies:
@@ -46,10 +49,9 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^1.0.3
   very_good_analysis: ^5.1.0
-
+  json_serializable: ^6.7.1
   build_runner: ^2.4.8
-  po_editor_translations: ^0.1.0
-
+  flutter_loco_translations: ^2.0.0
 
 flutter:
   uses-material-design: true

@@ -41,6 +41,7 @@ unlinked.ds
 unlinked_spec.ds
 .fvm/
 *freezed.dart
+*.g.dart
 lib/app/routing/router.gr.dart
 lib/app/di/configure_dependencies.config.dart
 
@@ -114,3 +115,4 @@ app.*.map.json
 !.idea/codeStyles/
 !.idea/dictionaries/
 !.idea/runConfigurations/
+/lib/l10n/arb/*

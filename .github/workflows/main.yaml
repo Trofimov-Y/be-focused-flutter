@@ -16,12 +16,35 @@ jobs:
   semantic-pull-request:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
 
-  build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
-    with:
-      setup: 'sh pre-build.sh'
-      min_coverage: 0
-      format_directories: 'lib'
-      coverage_excludes: '*.g.dart, *.freezed.dart, *.injectable.dart'
-      format_line_length: 100
-      flutter_channel: stable
+  project_style:
+    defaults:
+      run:
+        working-directory: .
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ''
+          channel: stable
+          cache: true
+          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
+
+      - name: 📦 Install Dependencies
+        run: |
+          flutter pub global activate very_good_cli
+          very_good packages get --recursive --ignore=${{inputs.package_get_excludes}}
+
+      - name: ⚙️ Run Setup
+        run: sh pre-build.sh
+
+      - name: ✨ Check Formatting
+        run: dart format --line-length 100 --set-exit-if-changed lib
+
+      - name: 🕵️ Analyze
+        run: flutter analyze lib test

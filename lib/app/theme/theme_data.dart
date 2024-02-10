@@ -7,9 +7,4 @@ final themeData = ThemeData(
   useMaterial3: true,
   colorScheme: colorScheme,
   textTheme: GoogleFonts.urbanistTextTheme(),
-  listTileTheme: const ListTileThemeData(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(20)),
-    ),
-  ),
 );
