@@ -14,9 +14,21 @@ on:
 
 jobs:
   semantic-pull-request:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
+    name: 🤖 Ensure Commit is Semantic
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          validateSingleCommit: false
+          ignoreLabels: |
+            bot
+            ignore-semantic-pull-request
+          wip: false
 
   project_style:
+    name: Lint
     defaults:
       run:
         working-directory: .
@@ -35,7 +47,7 @@ jobs:
           cache: true
           cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
 
-      - name: 🇬🇧 Get translations
+      - name: 🇬🇧  Get translations
         run: |
           dart pub global activate flutter_loco_translations
           dart pub global run flutter_loco_translations --locales="en" --api_key="bImSTiTrbG2UYvuDx55rwX-W0h7W1nu7" --path="lib/l10n/arb"
@@ -46,11 +58,11 @@ jobs:
           flutter pub global activate very_good_cli
           very_good packages get --recursive --ignore=${{inputs.package_get_excludes}}
 
-      - name: ⚙️ Run build_runner
-        run: flutter pub run build_runner build --delete-conflicting-outputs
-
       - name: ✨ Check Formatting
         run: dart format --line-length 100 --set-exit-if-changed lib
+
+      - name: ⚙️ Run build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: 🕵️ Analyze
         run: flutter analyze lib test
