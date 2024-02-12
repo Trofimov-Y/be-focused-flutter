@@ -403,14 +403,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_loco_translations:
-    dependency: "direct dev"
-    description:
-      name: flutter_loco_translations
-      sha256: "560bc7a840d9ccefd1e95743aa2590542768e6caf63b6908e3af819c81ef8a52"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   flutter_native_splash:
     dependency: "direct main"
     description:

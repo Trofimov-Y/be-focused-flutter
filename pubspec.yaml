@@ -73,9 +73,6 @@ dev_dependencies:
 
   build_runner: ^2.4.8
 
-  # L10N
-  flutter_loco_translations: ^2.0.0
-
 flutter:
   uses-material-design: true
   generate: true
