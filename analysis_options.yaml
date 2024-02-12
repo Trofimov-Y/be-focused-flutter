@@ -8,6 +8,9 @@ analyzer:
     - "**.environment_config.dart"
     - "lib/l10n/generated/*"
     - "lib/app/widgets/material/*"
+    - "lib/main_development.dart"
+    - "lib/main_production.dart"
+    - "lib/main_staging.dart"
 
 linter:
   rules:
