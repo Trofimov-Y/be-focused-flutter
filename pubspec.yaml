@@ -6,51 +6,74 @@ publish_to: none
 environment:
   sdk: ">=3.2.0 <4.0.0"
 
+# Core Dependencies
 dependencies:
-  bloc: ^8.1.2
   flutter:
-    sdk: flutter
-  flutter_bloc: ^8.1.3
-  flutter_localizations:
     sdk: flutter
   intl: ^0.18.0
 
+  # Bloc
+  bloc_presentation: ^1.0.0
+  flutter_bloc: ^8.1.3
+  bloc: ^8.1.2
+
+  # L10N
+  flutter_localizations:
+    sdk: flutter
+
+  # Dependency Injection
   injectable: ^2.3.2
+  get_it: ^7.6.7
+  injectable_generator: ^2.4.1
+
+  # UI Components
   icons_plus: ^5.0.0
   gap: ^3.0.1
-  injectable_generator: ^2.4.1
-  get_it: ^7.6.7
-  fpdart: ^1.1.0
-  rxdart: 0.27.7
-  dartx: ^1.2.0
   timeline_tile: ^2.0.0
-  logger: ^2.0.2+1
   auto_route: ^7.8.4
   auto_route_generator: ^7.3.2
   flutter_native_splash: ^2.3.10
   google_fonts: ^6.1.0
   awesome_extensions: ^2.0.12
-  freezed_annotation: ^2.4.1
   table_calendar: ^3.0.9
   flutter_sticky_header: ^0.6.5
   flutter_animate: ^4.5.0
 
+  # Logging and Utilities
+  logger: ^2.0.2+1
+  fpdart: ^1.1.0
+  rxdart: 0.27.7
+  dartx: ^1.2.0
+  freezed_annotation: ^2.4.1
+
+
+  # JSON and Serialization
   json_annotation: ^4.8.1
 
   # Firebase
   firebase_auth: ^4.17.4
-  firebase_core: ^2.25.3
-  cloud_firestore: ^4.15.3
+  firebase_core: ^2.25.4
+  cloud_firestore: ^4.15.4
 
 dev_dependencies:
+
+  # Test Dependencies
   bloc_test: ^9.1.5
-  freezed: ^2.4.6
+  mocktail: ^1.0.3
+
   flutter_test:
     sdk: flutter
-  mocktail: ^1.0.3
+
+  freezed: ^2.4.6
+
+  # Linting
   very_good_analysis: ^5.1.0
+  # JSON and Serialization
   json_serializable: ^6.7.1
+
   build_runner: ^2.4.8
+
+  # L10N
   flutter_loco_translations: ^2.0.0
 
 flutter:
