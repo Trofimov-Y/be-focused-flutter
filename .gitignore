@@ -55,6 +55,8 @@ lib/app/di/configure_dependencies.config.dart
 **/android/key.properties
 **/android/.idea/
 **/android/app/debug
+**/android/app/google-services.json
+
 **/android/app/profile
 **/android/app/release
 *.jks
